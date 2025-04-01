@@ -1,0 +1,21 @@
+---
+title: "01-blast"
+format: html
+editor: visual
+---
+
+I am going to download blast and use it to compare unknown sequences
+
+```{bash}
+
+cd /home/jovyan/applications
+curl -O https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-x64-linux.tar.gz
+tar -xf ncbi-blast-2.16.0+-x64-linux.tar.gz
+
+```
+
+```{bash}
+/home/jovyan/applications/ncbi-blast-2.16.0+/bin/blastx -h
+```
+
+
