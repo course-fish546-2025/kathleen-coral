@@ -1,0 +1,26 @@
+---
+title: "01-week1"
+author: "Kathleen Durkin"
+date: "2025-04-03"
+format: html
+editor: visual
+---
+
+# Week 01 Question Set
+
+## a) What is your prior experience in this discipline?
+
+My undergraduate degree is in Mathematical and Computational Biology, and I havd several years of undergraduate research experience in the field of population genomics. As a graduate student in the Roberts Lab I work with genomic, transcriptomic, and methylomic data to investigate epigenetic mechanisms in marine invertebrates.
+
+## b) What do you hope to get out of this class?
+
+I hope to solidify my understanding of processes I'm already famliar with (e.g. transcriptomic data processing and analysis) and learn some new tricks/pipelines.
+
+## c) This class is strongly rooted in an independent project related to genomic analyses. What specific project do you have in mind? If you do not have any data or preference, data can be provided / aquired. If you do not have a specfic project, what approach would you like to master as part of this class?
+
+I will be working with whole-genome bisulfite sequencing (WGBS) data to investigate intergenerational heritability of OA-induced DNA methylation in oysters. My primary focus is learning more about DNA methylation and relevant analyses to study it. As a secondary focus I'd like to learn the data processing steps required for WGBS data, since it's relevant to one of my chapters. 
+If possible I'd also like to learn how to process Nanopore sequencing data for methylation analysis, since I'll be working with that method this summer.
+
+## d) What are two things you found most useful from the reading?
+
+Unable to access the UW-available version of the textbook, but requested access.

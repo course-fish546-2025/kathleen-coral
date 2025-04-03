@@ -1,0 +1,992 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.552">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Kathleen Durkin">
+<meta name="dcterms.date" content="2025-04-02">
+
+<title>01-blast</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="01-blast_files/libs/clipboard/clipboard.min.js"></script>
+<script src="01-blast_files/libs/quarto-html/quarto.js"></script>
+<script src="01-blast_files/libs/quarto-html/popper.min.js"></script>
+<script src="01-blast_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="01-blast_files/libs/quarto-html/anchor.min.js"></script>
+<link href="01-blast_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="01-blast_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="01-blast_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="01-blast_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="01-blast_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="01-blast_files/libs/kePrint-0.0.1/kePrint.js"></script>
+<link href="01-blast_files/libs/lightable-0.0.1/lightable.css" rel="stylesheet">
+
+
+</head>
+
+<body class="fullcontent">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">01-blast</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Kathleen Durkin </p>
+          </div>
+  </div>
+    
+    <div>
+    <div class="quarto-title-meta-heading">Published</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">April 2, 2025</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="download-blast" class="level1">
+<h1>Download blast</h1>
+<p>NOTE: I only need to download blast using the below code if I’m working in Jupyter. When working in Raven I can use blast as already available in /home/shared</p>
+<p>I am going to download blast and use it to compare unknown sequences</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> /home/jovyan/applications</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-x64-linux.tar.gz</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">tar</span> <span class="at">-xf</span> ncbi-blast-2.16.0+-x64-linux.tar.gz</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If working in Jupyter:</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co">#/home/jovyan/applications/ncbi-blast-2.16.0+/bin/blastx -h</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="co"># If working in Raven:</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.15.0+/bin/blastx</span> <span class="at">-h</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>USAGE
+  blastx [-h] [-help] [-import_search_strategy filename]
+    [-export_search_strategy filename] [-task task_name] [-db database_name]
+    [-dbsize num_letters] [-gilist filename] [-seqidlist filename]
+    [-negative_gilist filename] [-negative_seqidlist filename]
+    [-taxids taxids] [-negative_taxids taxids] [-taxidlist filename]
+    [-negative_taxidlist filename] [-no_taxid_expansion] [-ipglist filename]
+    [-negative_ipglist filename] [-entrez_query entrez_query]
+    [-db_soft_mask filtering_algorithm] [-db_hard_mask filtering_algorithm]
+    [-subject subject_input_file] [-subject_loc range] [-query input_file]
+    [-out output_file] [-evalue evalue] [-word_size int_value]
+    [-gapopen open_penalty] [-gapextend extend_penalty]
+    [-qcov_hsp_perc float_value] [-max_hsps int_value]
+    [-xdrop_ungap float_value] [-xdrop_gap float_value]
+    [-xdrop_gap_final float_value] [-searchsp int_value]
+    [-sum_stats bool_value] [-max_intron_length length] [-seg SEG_options]
+    [-soft_masking soft_masking] [-matrix matrix_name]
+    [-threshold float_value] [-culling_limit int_value]
+    [-best_hit_overhang float_value] [-best_hit_score_edge float_value]
+    [-subject_besthit] [-window_size int_value] [-ungapped] [-lcase_masking]
+    [-query_loc range] [-strand strand] [-parse_deflines]
+    [-query_gencode int_value] [-outfmt format] [-show_gis]
+    [-num_descriptions int_value] [-num_alignments int_value]
+    [-line_length line_length] [-html] [-sorthits sort_hits]
+    [-sorthsps sort_hsps] [-max_target_seqs num_sequences]
+    [-num_threads int_value] [-mt_mode int_value] [-remote]
+    [-comp_based_stats compo] [-use_sw_tback] [-version]
+
+DESCRIPTION
+   Translated Query-Protein Subject BLAST 2.15.0+
+
+Use '-help' to print detailed descriptions of command line arguments</code></pre>
+</div>
+</div>
+</section>
+<section id="download-uniprotswissprot-reference-fastas" class="level1">
+<h1>Download Uniprot/Swissprot reference fastas</h1>
+<p>see https://www.uniprot.org/downloads</p>
+<p>https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-O</span> https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> uniprot_sprot.fasta.gz uniprot_sprot_r2025_04_03.fasta.gz</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="fu">gunzip</span> <span class="at">-k</span> uniprot_sprot_r2025_04_03.fasta.gz</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="fu">ls</span> ../data</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+<section id="build-blast-db" class="level1">
+<h1>Build BLAST db</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># If working in Jupytr Hub, file path is:</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="co"># /home/jovyan/applications/ncbi-blast-2.16.0+/bin</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb</span> <span class="dt">\</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>-in ../data/uniprot_sprot_r2025_04_03.fasta <span class="dt">\</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>-dbtype prot <span class="dt">\</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>-out ../output/01-blast/blastdb/uniprot_sprot_r2025_04_03</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+
+Building a new DB, current time: 04/03/2025 15:01:50
+New DB name:   /home/shared/8TB_HDD_02/shedurkin/kathleen-coral/assignments/output/01-blast/blastdb/uniprot_sprot_r2025_04_03
+New DB title:  ../data/uniprot_sprot_r2025_04_03.fasta
+Sequence type: Protein
+Deleted existing Protein BLAST database named /home/shared/8TB_HDD_02/shedurkin/kathleen-coral/assignments/output/01-blast/blastdb/uniprot_sprot_r2025_04_03
+Keep MBits: T
+Maximum file size: 3000000000B
+Adding sequences from FASTA; added 572970 sequences in 8.61971 seconds.</code></pre>
+</div>
+</div>
+<p>Get the query sequence</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> https://eagle.fish.washington.edu/cnidarian/Ab_4denovo_CLC6_a.fa <span class="dt">\</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>-k <span class="dt">\</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../data/Ab_4denovo_CLC6_a.fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>  % Total    % Received % Xferd  Average Speed   Time    Time     Time  Current
+                                 Dload  Upload   Total   Spent    Left  Speed
+
+  0     0    0     0    0     0      0      0 --:--:-- --:--:-- --:--:--     0
+100 1982k  100 1982k    0     0  5648k      0 --:--:-- --:--:-- --:--:-- 5648k</code></pre>
+</div>
+</div>
+<p>Check</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> ../data/Ab_4denovo_CLC6_a.fa</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">echo</span> <span class="st">"How many sequences are there?"</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a><span class="fu">grep</span> <span class="at">-c</span> <span class="st">"&gt;"</span> ../data/Ab_4denovo_CLC6_a.fa</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&gt;solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed_contig_1
+ACACCCCACCCCAACGCACCCTCACCCCCACCCCAACAATCCATGATTGAATACTTCATC
+TATCCAAGACAAACTCCTCCTACAATCCATGATAGAATTCCTCCAAAAATAATTTCACAC
+TGAAACTCCGGTATCCGAGTTATTTTGTTCCCAGTAAAATGGCATCAACAAAAGTAGGTC
+TGGATTAACGAACCAATGTTGCTGCGTAATATCCCATTGACATATCTTGTCGATTCCTAC
+CAGGATCCGGACTGACGAGATTTCACTGTACGTTTATGCAAGTCATTTCCATATATAAAA
+TTGGATCTTATTTGCACAGTTAAATGTCTCTATGCTTATTTATAAATCAATGCCCGTAAG
+CTCCTAATATTTCTCTTTTCGTCCGACGAGCAAACAGTGAGTTTACTGTGGCCTTCAGCA
+AAAGTATTGATGTTGTAAATCTCAGTTGTGATTGAACAATTTGCCTCACTAGAAGTAGCC
+TTC
+How many sequences are there?
+5490</code></pre>
+</div>
+</div>
+</section>
+<section id="run-blast" class="level1">
+<h1>Run BLAST</h1>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">/home/shared/ncbi-blast-2.15.0+/bin/blastx</span> <span class="dt">\</span></span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>-query ../data/Ab_4denovo_CLC6_a.fa <span class="dt">\</span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>-db ../output/01-blast/blastdb/uniprot_sprot_r2025_04_03 <span class="dt">\</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>-out ../output/01-blast/Ab_4-uniprot_blastx.tab <span class="dt">\</span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>-evalue 1E-20 <span class="dt">\</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>-num_threads 20 <span class="dt">\</span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>-max_target_seqs 1 <span class="dt">\</span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>-outfmt 6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Warning: [blastx] Examining 5 or more matches is recommended
+Warning: [Query 1-27] Examining 5 or more matches is recommended
+Warning: [Query 28-57] Examining 5 or more matches is recommended
+Warning: [Query 58-87] Examining 5 or more matches is recommended
+Warning: [Query 88-116] Examining 5 or more matches is recommended
+Warning: [Query 117-147] Examining 5 or more matches is recommended
+Warning: [Query 148-179] Examining 5 or more matches is recommended
+Warning: [Query 180-213] Examining 5 or more matches is recommended
+Warning: [Query 214-237] Examining 5 or more matches is recommended
+Warning: [Query 238-267] Examining 5 or more matches is recommended
+Warning: [Query 268-296] Examining 5 or more matches is recommended
+Warning: [Query 297-319] Examining 5 or more matches is recommended
+Warning: [Query 320-348] Examining 5 or more matches is recommended
+Warning: [Query 349-381] Examining 5 or more matches is recommended
+Warning: [Query 382-411] Examining 5 or more matches is recommended
+Warning: [Query 412-441] Examining 5 or more matches is recommended
+Warning: [Query 442-468] Examining 5 or more matches is recommended
+Warning: [Query 469-498] Examining 5 or more matches is recommended
+Warning: [Query 499-528] Examining 5 or more matches is recommended
+Warning: [Query 529-554] Examining 5 or more matches is recommended
+Warning: [Query 555-585] Examining 5 or more matches is recommended
+Warning: [Query 586-617] Examining 5 or more matches is recommended
+Warning: [Query 618-645] Examining 5 or more matches is recommended
+Warning: [Query 646-668] Examining 5 or more matches is recommended
+Warning: [Query 669-700] Examining 5 or more matches is recommended
+Warning: [Query 701-734] Examining 5 or more matches is recommended
+Warning: [Query 735-764] Examining 5 or more matches is recommended
+Warning: [Query 765-797] Examining 5 or more matches is recommended
+Warning: [Query 798-822] Examining 5 or more matches is recommended
+Warning: [Query 823-853] Examining 5 or more matches is recommended
+Warning: [Query 854-881] Examining 5 or more matches is recommended
+Warning: [Query 882-912] Examining 5 or more matches is recommended
+Warning: [Query 913-942] Examining 5 or more matches is recommended
+Warning: [Query 943-970] Examining 5 or more matches is recommended
+Warning: [Query 971-1003] Examining 5 or more matches is recommended
+Warning: [Query 1004-1033] Examining 5 or more matches is recommended
+Warning: [Query 1034-1061] Examining 5 or more matches is recommended
+Warning: [Query 1062-1091] Examining 5 or more matches is recommended
+Warning: [Query 1092-1123] Examining 5 or more matches is recommended
+Warning: [Query 1124-1156] Examining 5 or more matches is recommended
+Warning: [Query 1157-1192] Examining 5 or more matches is recommended
+Warning: [Query 1193-1221] Examining 5 or more matches is recommended
+Warning: [Query 1222-1250] Examining 5 or more matches is recommended
+Warning: [Query 1251-1282] Examining 5 or more matches is recommended
+Warning: [Query 1283-1314] Examining 5 or more matches is recommended
+Warning: [Query 1315-1347] Examining 5 or more matches is recommended
+Warning: [Query 1348-1381] Examining 5 or more matches is recommended
+Warning: [Query 1382-1414] Examining 5 or more matches is recommended
+Warning: [Query 1415-1445] Examining 5 or more matches is recommended
+Warning: [Query 1446-1478] Examining 5 or more matches is recommended
+Warning: [Query 1479-1507] Examining 5 or more matches is recommended
+Warning: [Query 1508-1540] Examining 5 or more matches is recommended
+Warning: [Query 1541-1571] Examining 5 or more matches is recommended
+Warning: [Query 1572-1605] Examining 5 or more matches is recommended
+Warning: [Query 1606-1637] Examining 5 or more matches is recommended
+Warning: [Query 1638-1670] Examining 5 or more matches is recommended
+Warning: [Query 1671-1702] Examining 5 or more matches is recommended
+Warning: [Query 1703-1737] Examining 5 or more matches is recommended
+Warning: [Query 1738-1768] Examining 5 or more matches is recommended
+Warning: [Query 1769-1800] Examining 5 or more matches is recommended
+Warning: [Query 1801-1832] Examining 5 or more matches is recommended
+Warning: [Query 1833-1869] Examining 5 or more matches is recommended
+Warning: [Query 1870-1902] Examining 5 or more matches is recommended
+Warning: [Query 1903-1938] Examining 5 or more matches is recommended
+Warning: [Query 1939-1973] Examining 5 or more matches is recommended
+Warning: [Query 1974-2005] Examining 5 or more matches is recommended
+Warning: [Query 2006-2042] Examining 5 or more matches is recommended
+Warning: [Query 2043-2074] Examining 5 or more matches is recommended
+Warning: [Query 2075-2103] Examining 5 or more matches is recommended
+Warning: [Query 2104-2137] Examining 5 or more matches is recommended
+Warning: [Query 2138-2170] Examining 5 or more matches is recommended
+Warning: [Query 2171-2202] Examining 5 or more matches is recommended
+Warning: [Query 2203-2240] Examining 5 or more matches is recommended
+Warning: [Query 2241-2272] Examining 5 or more matches is recommended
+Warning: [Query 2273-2304] Examining 5 or more matches is recommended
+Warning: [Query 2305-2337] Examining 5 or more matches is recommended
+Warning: [Query 2338-2371] Examining 5 or more matches is recommended
+Warning: [Query 2372-2404] Examining 5 or more matches is recommended
+Warning: [Query 2405-2436] Examining 5 or more matches is recommended
+Warning: [Query 2437-2468] Examining 5 or more matches is recommended
+Warning: [Query 2469-2503] Examining 5 or more matches is recommended
+Warning: [Query 2504-2538] Examining 5 or more matches is recommended
+Warning: [Query 2539-2574] Examining 5 or more matches is recommended
+Warning: [Query 2575-2609] Examining 5 or more matches is recommended
+Warning: [Query 2610-2642] Examining 5 or more matches is recommended
+Warning: [Query 2643-2678] Examining 5 or more matches is recommended
+Warning: [Query 2679-2712] Examining 5 or more matches is recommended
+Warning: [Query 2713-2747] Examining 5 or more matches is recommended
+Warning: [Query 2748-2781] Examining 5 or more matches is recommended
+Warning: [Query 2782-2816] Examining 5 or more matches is recommended
+Warning: [Query 2817-2852] Examining 5 or more matches is recommended
+Warning: [Query 2853-2890] Examining 5 or more matches is recommended
+Warning: [Query 2891-2923] Examining 5 or more matches is recommended
+Warning: [Query 2924-2956] Examining 5 or more matches is recommended
+Warning: [Query 2957-2992] Examining 5 or more matches is recommended
+Warning: [Query 2993-3029] Examining 5 or more matches is recommended
+Warning: [Query 3030-3063] Examining 5 or more matches is recommended
+Warning: [Query 3064-3098] Examining 5 or more matches is recommended
+Warning: [Query 3099-3133] Examining 5 or more matches is recommended
+Warning: [Query 3134-3170] Examining 5 or more matches is recommended
+Warning: [Query 3171-3204] Examining 5 or more matches is recommended
+Warning: [Query 3205-3240] Examining 5 or more matches is recommended
+Warning: [Query 3241-3276] Examining 5 or more matches is recommended
+Warning: [Query 3277-3316] Examining 5 or more matches is recommended
+Warning: [Query 3317-3351] Examining 5 or more matches is recommended
+Warning: [Query 3352-3389] Examining 5 or more matches is recommended
+Warning: [Query 3390-3426] Examining 5 or more matches is recommended
+Warning: [Query 3427-3463] Examining 5 or more matches is recommended
+Warning: [Query 3464-3498] Examining 5 or more matches is recommended
+Warning: [Query 3499-3533] Examining 5 or more matches is recommended
+Warning: [Query 3534-3570] Examining 5 or more matches is recommended
+Warning: [Query 3571-3609] Examining 5 or more matches is recommended
+Warning: [Query 3610-3642] Examining 5 or more matches is recommended
+Warning: [Query 3643-3678] Examining 5 or more matches is recommended
+Warning: [Query 3679-3717] Examining 5 or more matches is recommended
+Warning: [Query 3718-3754] Examining 5 or more matches is recommended
+Warning: [Query 3755-3792] Examining 5 or more matches is recommended
+Warning: [Query 3793-3832] Examining 5 or more matches is recommended
+Warning: [Query 3833-3868] Examining 5 or more matches is recommended
+Warning: [Query 3869-3908] Examining 5 or more matches is recommended
+Warning: [Query 3909-3946] Examining 5 or more matches is recommended
+Warning: [Query 3947-3982] Examining 5 or more matches is recommended
+Warning: [Query 3983-4018] Examining 5 or more matches is recommended
+Warning: [Query 4019-4054] Examining 5 or more matches is recommended
+Warning: [Query 4055-4092] Examining 5 or more matches is recommended
+Warning: [Query 4093-4131] Examining 5 or more matches is recommended
+Warning: [Query 4132-4170] Examining 5 or more matches is recommended
+Warning: [Query 4171-4208] Examining 5 or more matches is recommended
+Warning: [Query 4209-4246] Examining 5 or more matches is recommended
+Warning: [Query 4247-4288] Examining 5 or more matches is recommended
+Warning: [Query 4289-4325] Examining 5 or more matches is recommended
+Warning: [Query 4326-4363] Examining 5 or more matches is recommended
+Warning: [Query 4364-4402] Examining 5 or more matches is recommended
+Warning: [Query 4403-4441] Examining 5 or more matches is recommended
+Warning: [Query 4442-4479] Examining 5 or more matches is recommended
+Warning: [Query 4480-4518] Examining 5 or more matches is recommended
+Warning: [Query 4519-4554] Examining 5 or more matches is recommended
+Warning: [Query 4555-4593] Examining 5 or more matches is recommended
+Warning: [Query 4594-4633] Examining 5 or more matches is recommended
+Warning: [Query 4634-4671] Examining 5 or more matches is recommended
+Warning: [Query 4672-4709] Examining 5 or more matches is recommended
+Warning: [Query 4710-4748] Examining 5 or more matches is recommended
+Warning: [Query 4749-4787] Examining 5 or more matches is recommended
+Warning: [Query 4788-4828] Examining 5 or more matches is recommended
+Warning: [Query 4829-4869] Examining 5 or more matches is recommended
+Warning: [Query 4870-4905] Examining 5 or more matches is recommended
+Warning: [Query 4906-4944] Examining 5 or more matches is recommended
+Warning: [Query 4945-4983] Examining 5 or more matches is recommended
+Warning: [Query 4984-5024] Examining 5 or more matches is recommended
+Warning: [Query 5025-5065] Examining 5 or more matches is recommended
+Warning: [Query 5066-5105] Examining 5 or more matches is recommended
+Warning: [Query 5106-5147] Examining 5 or more matches is recommended
+Warning: [Query 5148-5187] Examining 5 or more matches is recommended
+Warning: [Query 5188-5229] Examining 5 or more matches is recommended
+Warning: [Query 5230-5270] Examining 5 or more matches is recommended
+Warning: [Query 5271-5311] Examining 5 or more matches is recommended
+Warning: [Query 5312-5353] Examining 5 or more matches is recommended
+Warning: [Query 5354-5393] Examining 5 or more matches is recommended
+Warning: [Query 5394-5434] Examining 5 or more matches is recommended
+Warning: [Query 5435-5475] Examining 5 or more matches is recommended
+Warning: [Query 5476-5490] Examining 5 or more matches is recommended</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../output/01-blast/Ab_4-uniprot_blastx.tab</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../output/01-blast/Ab_4-uniprot_blastx.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed_contig_3    sp|O42248|GBLP_DANRE    82.456  171 30  0   1   513 35  205 2.83e-103   301
+solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed_contig_5    sp|Q08013|SSRG_RAT  75.385  65  16  0   3   197 121 185 1.41e-28    104
+765 ../output/01-blast/Ab_4-uniprot_blastx.tab</code></pre>
+</div>
+</div>
+</section>
+<section id="download-uniprotswissprot-reference-table" class="level1">
+<h1>Download Uniprot/Swissprot reference table</h1>
+<p>Download</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ../data</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="ex">curl</span> <span class="at">-o</span> uniprot_table_r2025_04_03.tab <span class="at">-H</span> <span class="st">"Accept: text/plain; format=tsv"</span> <span class="st">"https://rest.uniprot.org/uniprotkb/stream?compressed=true&amp;fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&amp;format=tsv&amp;query=%28*%29+AND+%28reviewed%3Atrue%29"</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="fu">mv</span> <span class="st">"stream?compressed=true&amp;fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&amp;format=tsv&amp;query=%28*%29+AND+%28reviewed%3Atrue%29"</span> uniprot_table_r2025_04_03.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Check file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">head</span> <span class="at">-2</span> ../data/uniprot_table_r2025_04_03.tab</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">wc</span> <span class="at">-l</span> ../data/uniprot_table_r2025_04_03.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>&lt;8b&gt;
+&lt;ab&gt;&lt;96&gt;&lt;86&gt;k&lt;9c&gt;4o&lt;ed&gt;2&lt;df&gt;x&lt;eb&gt;&lt;de&gt;&lt;e1&gt;&lt;ef&gt;8&lt;b3&gt;^&lt;f3&gt;&lt;f3&gt;g%G&lt;fe&gt;&lt;b3&gt;.&lt;9f&gt;&lt;e7&gt;e&lt;ea&gt;%/&lt;d3&gt;W&lt;f3&gt;2&lt;8d&gt;U&lt;fb&gt;&lt;d1&gt; BhnZ]&lt;af&gt;&lt;c3&gt;$&lt;9a&gt;wn.بٽ&lt;ee&gt;j&lt;f3&gt;&lt;cd&gt;8\&lt;ea&gt;&lt;d1&gt;r&lt;92&gt;4&lt;d9&gt;&lt;ab&gt;y&lt;ad&gt;C@&lt;f6&gt;)&lt;.&lt;fa&gt;e&lt;80&gt;&lt;a5&gt;&lt;a5&gt;&lt;d7&gt;SjC&lt;af&gt;$&lt;b3&gt;&lt;97&gt;V
+248932 ../data/uniprot_table_r2025_04_03.tab</code></pre>
+</div>
+</div>
+</section>
+<section id="join-tables-to-functionally-annotate-sequences" class="level1">
+<h1>Join tables to functionally annotate sequences</h1>
+<p>Separate the <code>sp|O42248|GBLP_DANRE</code> portion into its individual components (so they can be used for searching/joining purposes)</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tr</span> <span class="st">'|'</span> <span class="st">'\t'</span> <span class="op">&lt;</span> ../output/01-blast/Ab_4-uniprot_blastx.tab <span class="kw">|</span> <span class="fu">head</span> <span class="at">-2</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed_contig_3    sp  O42248  GBLP_DANRE  82.456  171 30  0   1   513 35  205 2.83e-103   301
+solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed_contig_5    sp  Q08013  SSRG_RAT    75.385  65  16  0   3   197 121 185 1.41e-28    104</code></pre>
+</div>
+</div>
+<p>Save this as a new file</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="fu">tr</span> <span class="st">'|'</span> <span class="st">'\t'</span> <span class="op">&lt;</span> ../output/01-blast/Ab_4-uniprot_blastx.tab <span class="dt">\</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="op">&gt;</span> ../output/01-blast/Ab_4-uniprot_blastx_sep.tab</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Read blast results and Uniprot/Swissprot table into R and join</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.2     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(kableExtra)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'kableExtra'
+
+The following object is masked from 'package:dplyr':
+
+    group_rows</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Load data</span></span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>bltabl <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../output/01-blast/Ab_4-uniprot_blastx_sep.tab"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb25-3"><a href="#cb25-3" aria-hidden="true" tabindex="-1"></a>spgo <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"../data/uniprot_table_r2025_04_03.tab"</span>, <span class="at">sep =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>, <span class="at">header =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb25-4"><a href="#cb25-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-5"><a href="#cb25-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb25-6"><a href="#cb25-6" aria-hidden="true" tabindex="-1"></a><span class="fu">kbl</span>(</span>
+<span id="cb25-7"><a href="#cb25-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">head</span>(</span>
+<span id="cb25-8"><a href="#cb25-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(bltabl, spgo,  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"V3"</span> <span class="ot">=</span> <span class="st">"Entry"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb25-9"><a href="#cb25-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">select</span>(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">V1 =</span> <span class="fu">str_replace_all</span>(V1, </span>
+<span id="cb25-10"><a href="#cb25-10" aria-hidden="true" tabindex="-1"></a>              <span class="at">pattern =</span> <span class="st">"solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed"</span>, <span class="at">replacement =</span> <span class="st">"Ab"</span>))</span>
+<span id="cb25-11"><a href="#cb25-11" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb25-12"><a href="#cb25-12" aria-hidden="true" tabindex="-1"></a>) <span class="sc">%&gt;%</span></span>
+<span id="cb25-13"><a href="#cb25-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>(<span class="at">bootstrap_options =</span> <span class="fu">c</span>(<span class="st">"striped"</span>, <span class="st">"hover"</span>, <span class="st">"condensed"</span>, <span class="st">"responsive"</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<div class="table-responsive">
+<table class="table table-striped table-hover table-condensed table-sm small" data-quarto-postprocess="true">
+<thead>
+<tr class="header">
+<th style="text-align: left;" data-quarto-table-cell-role="th">V1</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">V3</th>
+<th style="text-align: right;" data-quarto-table-cell-role="th">V13</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Protein.names</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Organism</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene.Ontology..biological.process.</th>
+<th style="text-align: left;" data-quarto-table-cell-role="th">Gene.Ontology.IDs</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Ab_contig_3</td>
+<td style="text-align: left;">O42248</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Small ribosomal subunit protein RACK1 (Guanine nucleotide-binding protein subunit beta-2-like 1) (Receptor of activated protein kinase C) (RACK)</td>
+<td style="text-align: left;">Danio rerio (Zebrafish) (Brachydanio rerio)</td>
+<td style="text-align: left;">angiogenesis [GO:0001525]; convergent extension involved in gastrulation [GO:0060027]; negative regulation of translational frameshifting [GO:2001125]; negative regulation of Wnt signaling pathway [GO:0030178]; positive regulation of gastrulation [GO:2000543]; regulation of cell division [GO:0051302]; regulation of establishment of cell polarity [GO:2000114]; regulation of protein localization [GO:0032880]; rescue of stalled ribosome [GO:0072344]</td>
+<td style="text-align: left;">GO:0001525; GO:0005080; GO:0005634; GO:0005737; GO:0005829; GO:0005840; GO:0030178; GO:0032880; GO:0043022; GO:0045182; GO:0051302; GO:0060027; GO:0072344; GO:1990904; GO:2000114; GO:2000543; GO:2001125</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ab_contig_5</td>
+<td style="text-align: left;">Q08013</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Translocon-associated protein subunit gamma (TRAP-gamma) (Signal sequence receptor subunit gamma) (SSR-gamma)</td>
+<td style="text-align: left;">Rattus norvegicus (Rat)</td>
+<td style="text-align: left;">SRP-dependent cotranslational protein targeting to membrane [GO:0006614]</td>
+<td style="text-align: left;">GO:0005783; GO:0005784; GO:0006614</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ab_contig_6</td>
+<td style="text-align: left;">P12234</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Solute carrier family 25 member 3 (Phosphate carrier protein, mitochondrial) (PiC) (Phosphate transport protein) (PTP)</td>
+<td style="text-align: left;">Bos taurus (Bovine)</td>
+<td style="text-align: left;">mitochondrial phosphate ion transmembrane transport [GO:1990547]; phosphate ion transmembrane transport [GO:0035435]</td>
+<td style="text-align: left;">GO:0005315; GO:0005739; GO:0005743; GO:0015293; GO:0015317; GO:0035435; GO:0044877; GO:1990547</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ab_contig_9</td>
+<td style="text-align: left;">Q41629</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">ADP,ATP carrier protein 1, mitochondrial (ADP/ATP translocase 1) (Adenine nucleotide translocator 1) (ANT 1)</td>
+<td style="text-align: left;">Triticum aestivum (Wheat)</td>
+<td style="text-align: left;">mitochondrial ADP transmembrane transport [GO:0140021]; mitochondrial ATP transmembrane transport [GO:1990544]</td>
+<td style="text-align: left;">GO:0005471; GO:0005743; GO:0140021; GO:1990544</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ab_contig_13</td>
+<td style="text-align: left;">Q32NG4</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Glutamine amidotransferase-like class 1 domain-containing protein 1 (Ferry endosomal RAB5 effector complex subunit 5) (Fy-5) (Parkinson disease 7 domain-containing protein 1)</td>
+<td style="text-align: left;">Xenopus laevis (African clawed frog)</td>
+<td style="text-align: left;">methylglyoxal catabolic process to D-lactate via S-lactoyl-glutathione [GO:0019243]</td>
+<td style="text-align: left;">GO:0005576; GO:0005769; GO:0019172; GO:0019243</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ab_contig_23</td>
+<td style="text-align: left;">Q9GNE2</td>
+<td style="text-align: right;">0</td>
+<td style="text-align: left;">Large ribosomal subunit protein uL14 (60S ribosomal protein L23) (AeRpL17A) (L17A)</td>
+<td style="text-align: left;">Aedes aegypti (Yellowfever mosquito) (Culex aegypti)</td>
+<td style="text-align: left;">translation [GO:0006412]</td>
+<td style="text-align: left;">GO:0003735; GO:0006412; GO:0022625; GO:0070180</td>
+</tr>
+</tbody>
+</table>
+</div>
+
+
+</div>
+</div>
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a><span class="fu">left_join</span>(bltabl, spgo,  <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"V3"</span> <span class="ot">=</span> <span class="st">"Entry"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs) <span class="sc">%&gt;%</span> <span class="fu">mutate</span>(<span class="at">V1 =</span> <span class="fu">str_replace_all</span>(V1, </span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>            <span class="at">pattern =</span> <span class="st">"solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed"</span>, <span class="at">replacement =</span> <span class="st">"Ab"</span>)) <span class="sc">%&gt;%</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">write_delim</span>(<span class="st">"../output/01-blast/blast_annot_go.tab"</span>, <span class="at">delim =</span> <span class="st">'</span><span class="sc">\t</span><span class="st">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

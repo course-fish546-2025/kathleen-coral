@@ -1,0 +1,150 @@
+---
+title: "01-blast"
+author: "Kathleen Durkin"
+date: "2025-04-02"
+format: html
+editor: visual
+---
+
+# Download blast
+
+NOTE: I only need to download blast using the below code if I'm working in Jupyter. When working in Raven I can use blast as already available in /home/shared
+
+I am going to download blast and use it to compare unknown sequences
+
+```{r, engine='bash', eval=FALSE}
+cd /home/jovyan/applications
+curl -O https://ftp.ncbi.nlm.nih.gov/blast/executables/blast+/LATEST/ncbi-blast-2.16.0+-x64-linux.tar.gz
+tar -xf ncbi-blast-2.16.0+-x64-linux.tar.gz
+
+```
+
+```{bash}
+# If working in Jupyter:
+#/home/jovyan/applications/ncbi-blast-2.16.0+/bin/blastx -h
+
+# If working in Raven:
+/home/shared/ncbi-blast-2.15.0+/bin/blastx -h
+```
+
+# Download Uniprot/Swissprot reference fastas
+
+see https://www.uniprot.org/downloads
+
+https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+
+```{bash, eval=FALSE}
+cd ../data
+curl -O https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+mv uniprot_sprot.fasta.gz uniprot_sprot_r2025_04_03.fasta.gz
+gunzip -k uniprot_sprot_r2025_04_03.fasta.gz
+ls ../data
+```
+
+# Build BLAST db
+
+```{bash}
+# If working in Jupytr Hub, file path is:
+# /home/jovyan/applications/ncbi-blast-2.16.0+/bin
+
+/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb \
+-in ../data/uniprot_sprot_r2025_04_03.fasta \
+-dbtype prot \
+-out ../output/01-blast/blastdb/uniprot_sprot_r2025_04_03
+```
+
+Get the query sequence
+
+```{bash}
+curl https://eagle.fish.washington.edu/cnidarian/Ab_4denovo_CLC6_a.fa \
+-k \
+> ../data/Ab_4denovo_CLC6_a.fa
+```
+
+Check
+
+```{bash}
+head ../data/Ab_4denovo_CLC6_a.fa
+echo "How many sequences are there?"
+grep -c ">" ../data/Ab_4denovo_CLC6_a.fa
+```
+
+
+# Run BLAST
+
+```{bash}
+/home/shared/ncbi-blast-2.15.0+/bin/blastx \
+-query ../data/Ab_4denovo_CLC6_a.fa \
+-db ../output/01-blast/blastdb/uniprot_sprot_r2025_04_03 \
+-out ../output/01-blast/Ab_4-uniprot_blastx.tab \
+-evalue 1E-20 \
+-num_threads 20 \
+-max_target_seqs 1 \
+-outfmt 6
+```
+
+```{bash}
+head -2 ../output/01-blast/Ab_4-uniprot_blastx.tab
+wc -l ../output/01-blast/Ab_4-uniprot_blastx.tab
+```
+
+# Download Uniprot/Swissprot reference table
+
+Download
+```{bash, eval=FALSE}
+cd ../data
+curl -o uniprot_table_r2025_04_03.tab -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&format=tsv&query=%28*%29+AND+%28reviewed%3Atrue%29"
+
+mv "stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&format=tsv&query=%28*%29+AND+%28reviewed%3Atrue%29" uniprot_table_r2025_04_03.tab
+```
+
+Check file
+```{bash}
+head -2 ../data/uniprot_table_r2025_04_03.tab
+wc -l ../data/uniprot_table_r2025_04_03.tab
+```
+
+
+# Join tables to functionally annotate sequences
+
+Separate the `sp|O42248|GBLP_DANRE` portion into its individual components (so they can be used for searching/joining purposes)
+```{bash}
+tr '|' '\t' < ../output/01-blast/Ab_4-uniprot_blastx.tab | head -2
+```
+Save this as a new file
+```{bash}
+tr '|' '\t' < ../output/01-blast/Ab_4-uniprot_blastx.tab \
+> ../output/01-blast/Ab_4-uniprot_blastx_sep.tab
+```
+
+Read blast results and Uniprot/Swissprot table into R and join
+```{r}
+library(tidyverse)
+library(kableExtra)
+
+# Load data
+bltabl <- read.csv("../output/01-blast/Ab_4-uniprot_blastx_sep.tab", sep = '\t', header = FALSE)
+spgo <- read.csv("../data/uniprot_table_r2025_04_03.tab", sep = '\t', header = TRUE)
+
+
+kbl(
+  head(
+    left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
+    select(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs) %>% mutate(V1 = str_replace_all(V1, 
+              pattern = "solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed", replacement = "Ab"))
+  )
+) %>%
+  kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
+  select(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs) %>% mutate(V1 = str_replace_all(V1, 
+            pattern = "solid0078_20110412_FRAG_BC_WHITE_WHITE_F3_QV_SE_trimmed", replacement = "Ab")) %>%
+  write_delim("../output/01-blast/blast_annot_go.tab", delim = '\t')
+
+```
+
+
+
+
+
+
