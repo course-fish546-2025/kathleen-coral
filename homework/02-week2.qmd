@@ -1,0 +1,29 @@
+---
+title: "02-week2"
+author: "Kathleen Durkin"
+date: "2025-04-08"
+format: html
+editor: visual
+---
+
+## Week 02 Question Set
+
+a)  **What do you feel was the most impressive thing you did in class last week was?**
+
+Accessing most updated versions of Uniprot/Swissprot databases.
+
+b)  **What is your weekly goal for making progress on your project? What is the next step?**
+
+Understand and be able to replicate all of the data processing steps for WGBS data (all the steps required to take raw data to differential methylation analysis).
+
+c)  **There were two readings this week not from the textbook, meant for two different audiences. Which reading did you get the most out of and why? Do you have any questions regarding the Journal of Shellfish Research paper?**
+
+I found the textbook reading more beneficial because, while I use the bash commands/tools discussed with some regularity, I didn't know the specifics of when/why to use each (e.g. the difference between wget and curl).
+
+d)  **What is your favorite thing about markdown and why?**
+
+My favorite part of .Rmd files (and .qmds) is that you can integrate code, code output, and text, and images in a straightforward way, with a visually appealing end result!
+
+e) **What is the difference between `curl` and `wget`? When would you used one over the other?**
+
+`wget` is most useful for downloading files from HTTP and FTP web links, and can recursively download many files. In contrast,  `curl` can download files through more protocol types, including HTTP, FTP, SFTP, and SCP.
