@@ -8,5 +8,7 @@ assignments/data/uniprot_sprot_r2025_04_03.fasta
 assignments/data/uniprot_sprot_r2025_04_03.fasta.gz
 assignments/data/uniprot_table_r2025_04_03.tab
 assignments/data/uniprot/Ab_4denovo_CLC6_a.fa
+assignments/data/02-DGE-analysis/*
+
 
 assignments/output/01-blast/blastdb/*

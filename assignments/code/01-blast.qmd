@@ -55,7 +55,7 @@ ls ../data
 
 Get the query sequence
 
-```{bash}
+```{r, engine='bash', eval=FALSE}
 curl https://eagle.fish.washington.edu/cnidarian/Ab_4denovo_CLC6_a.fa \
 -k \
 > ../data/Ab_4denovo_CLC6_a.fa
@@ -68,7 +68,6 @@ head ../data/Ab_4denovo_CLC6_a.fa
 echo "How many sequences are there?"
 grep -c ">" ../data/Ab_4denovo_CLC6_a.fa
 ```
-
 
 # Run BLAST
 
@@ -91,6 +90,7 @@ wc -l ../output/01-blast/Ab_4-uniprot_blastx.tab
 # Download Uniprot/Swissprot reference table
 
 Download
+
 ```{bash, eval=FALSE}
 cd ../data
 curl -o uniprot_table_r2025_04_03.tab -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&format=tsv&query=%28*%29+AND+%28reviewed%3Atrue%29"
@@ -99,25 +99,29 @@ mv "stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgen
 ```
 
 Check file
+
 ```{bash}
 head -2 ../data/uniprot_table_r2025_04_03.tab
 wc -l ../data/uniprot_table_r2025_04_03.tab
 ```
 
-
 # Join tables to functionally annotate sequences
 
 Separate the `sp|O42248|GBLP_DANRE` portion into its individual components (so they can be used for searching/joining purposes)
+
 ```{bash}
 tr '|' '\t' < ../output/01-blast/Ab_4-uniprot_blastx.tab | head -2
 ```
+
 Save this as a new file
+
 ```{bash}
 tr '|' '\t' < ../output/01-blast/Ab_4-uniprot_blastx.tab \
 > ../output/01-blast/Ab_4-uniprot_blastx_sep.tab
 ```
 
 Read blast results and Uniprot/Swissprot table into R and join
+
 ```{r}
 library(tidyverse)
 library(kableExtra)
@@ -142,9 +146,3 @@ left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
   write_delim("../output/01-blast/blast_annot_go.tab", delim = '\t')
 
 ```
-
-
-
-
-
-

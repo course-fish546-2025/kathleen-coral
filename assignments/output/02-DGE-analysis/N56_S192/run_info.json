@@ -1,0 +1,13 @@
+{
+	"n_targets": 73307,
+	"n_bootstraps": 0,
+	"n_processed": 451236,
+	"n_pseudoaligned": 159464,
+	"n_unique": 93639,
+	"p_pseudoaligned": 35.3,
+	"p_unique": 20.8,
+	"kallisto_version": "0.46.1",
+	"index_version": 10,
+	"start_time": "Tue Apr  8 16:46:21 2025",
+	"call": "/home/shared/kallisto/kallisto quant -i ../data/02-DGE-analysis/cgigas_roslin_rna.index -o ../output/02-DGE-analysis/N56_S192 -t 40 --single -l 100 -s 10 ../data/02-DGE-analysis/N56_S192_L001_R1_001.fastq.gz"
+}
