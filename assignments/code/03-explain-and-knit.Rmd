@@ -1,0 +1,469 @@
+---
+title: "03-explain-and-knit"
+author: "Kathleen Durkin"
+date: "2025-04-15"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+eval: FALSE
+---
+
+Assignment details [here](https://sr320.github.io/course-fish546-2025/assignments/03-knit.html)
+
+Basically, I'll be running blast and differential expression analysis with more detailed explanation and output summary (including visualizations)
+
+# Load packages:
+
+```{r}
+library(dplyr)
+library(DESeq2)
+library(tidyverse)
+library(pheatmap)
+library(RColorBrewer)
+library(data.table)
+```
+
+# Blast
+
+## Download Uniprot/Swissprot reference fastas
+
+Download fasta file of genes with known functions. Our reads will then be mapped (aligned) to these fastas. If one of our reads maps to a gene with known function in a different species, then it likely has similar function in our species of interest.
+
+see https://www.uniprot.org/downloads
+
+https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+
+```{bash, eval=FALSE}
+cd ../data
+curl -O https://ftp.uniprot.org/pub/databases/uniprot/current_release/knowledgebase/complete/uniprot_sprot.fasta.gz
+mv uniprot_sprot.fasta.gz uniprot_sprot_r2025_04_03.fasta.gz
+gunzip -k uniprot_sprot_r2025_04_03.fasta.gz
+ls ../data
+```
+
+## Build BLAST db
+
+This is essentially a database of Uniprot-sourced fastas (genes of known function)
+
+```{bash, eval=FALSE}
+# If working in Jupytr Hub, file path is:
+# /home/jovyan/applications/ncbi-blast-2.16.0+/bin
+
+/home/shared/ncbi-blast-2.15.0+/bin/makeblastdb \
+-in ../data/uniprot_sprot_r2025_04_03.fasta \
+-dbtype prot \
+-out ../output/03-explain-and-knit/blastdb/uniprot_sprot_r2025_04_03
+```
+
+## Downloading reference
+
+We'll eventually be performing alignment using kallisto pseudo-allignment, which requires a reference *transcriptome8.
+
+Download *C.gigas* transcriptome.
+
+Note I already have the transcriptome downloaded to `kathleen-coral/assignments/data/02-DGE-analysis/`, so I will be accessing it from that location throuhout this code. You may need to change some file paths if you prefer to store the transcriptome from a different location.
+```{r, engine='bash', eval=FALSE}
+mkdir ../data/02-DGE-analysis
+cd ../data/02-DGE-analysis
+
+curl --insecure -O https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/rna.fna
+```
+
+Check the genome.
+```{bash}
+head ../data/02-DGE-analysis/rna.fna
+
+echo""
+echo "How many sequences are there?"
+
+grep -c ">" ../data/02-DGE-analysis/rna.fna
+```
+
+## Run BLAST
+
+This will map genes of known function to our genome.
+
+```{bash, eval=FALSE}
+/home/shared/ncbi-blast-2.15.0+/bin/blastx \
+-query ../data/02-DGE-analysis/rna.fna \
+-db ../output/03-explain-and-knit/blastdb/uniprot_sprot_r2025_04_03 \
+-out ../output/03-explain-and-knit/Cgigas-uniprot_blastx.tab \
+-evalue 1E-20 \
+-num_threads 20 \
+-max_target_seqs 1 \
+-outfmt 6
+```
+
+Check blast output
+```{bash}
+head -2 ../output/03-explain-and-knit/Cgigas-uniprot_blastx.tab
+
+echo ""
+echo "How many sequences in our transcriptome mapped to sequences of known function?"
+wc -l ../output/03-explain-and-knit/Cgigas-uniprot_blastx.tab
+```
+
+## Download Uniprot/Swissprot reference table
+
+This table provides detailed functional information for each of the previously described sequences.
+
+Download
+```{bash, eval=FALSE}
+cd ../data
+curl -o uniprot_table_r2025_04_03.tab -H "Accept: text/plain; format=tsv" "https://rest.uniprot.org/uniprotkb/stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&format=tsv&query=%28*%29+AND+%28reviewed%3Atrue%29"
+
+mv "stream?compressed=true&fields=accession%2Creviewed%2Cid%2Cprotein_name%2Cgene_names%2Corganism_name%2Clength%2Cgo_p%2Cgo%2Cgo_id%2Cgo_c%2Cgo_f&format=tsv&query=%28*%29+AND+%28reviewed%3Atrue%29" uniprot_table_r2025_04_03.tab
+```
+
+Check file
+```{bash}
+head -2 ../data/uniprot_table_r2025_04_03.tab
+wc -l ../data/uniprot_table_r2025_04_03.tab
+```
+
+We have functional information for 248,932 entries.
+
+## Join tables to functionally annotate sequences
+
+We now have two tables. One matches genes of known function to our genome. The other matches functional information to genes of known function. We want to match functional information to our genome.
+
+First, the Blast output includes matching information in the format `sp|O42248|GBLP_DANRE`. We will need to use the Accession ID, which is the middle alphanumeric. 
+
+Separate the `sp|O42248|GBLP_DANRE` portion into its individual components (so they can be used for searching/joining purposes).
+
+```{bash}
+tr '|' '\t' < ../output/03-explain-and-knit/Cgigas-uniprot_blastx.tab | head -2
+```
+
+Save this as a new file.
+
+```{bash}
+tr '|' '\t' < ../output/03-explain-and-knit/Cgigas-uniprot_blastx.tab \
+> ../output/03-explain-and-knit/Cgigas-uniprot_blastx_sep.tab
+```
+
+Read blast results and Uniprot/Swissprot table into R and join.
+
+```{r}
+library(tidyverse)
+library(kableExtra)
+
+# Load data
+bltabl <- read.csv("../output/03-explain-and-knit/Cgigas-uniprot_blastx_sep.tab", sep = '\t', header = FALSE)
+spgo <- read.csv("../data/uniprot_table_r2025_04_03.tab", sep = '\t', header = TRUE)
+
+annotated <- left_join(bltabl, spgo,  by = c("V3" = "Entry")) %>%
+    # Select columns of interest
+  select(V1, V3, V13, Protein.names, Organism, Gene.Ontology..biological.process., Gene.Ontology.IDs)
+
+# Use kable formatting for a more legible output
+kbl(head(annotated)) %>% kable_styling(bootstrap_options = c("striped", "hover", "condensed", "responsive"))
+
+write_delim(annotated, "../output/03-explain-and-knit/blast_annot_go.tab", delim = '\t')
+
+```
+
+
+# Differential Gene Expression analysis
+
+## Index the reference
+
+Index the C.gigas transcriptome file `rna.fna` while also renaming it as cgigas_roslin_rna.index. Index will make downstream use of the file less computationally intensive.
+
+```{r, engine='bash', eval=FALSE}
+/home/shared/kallisto/kallisto \
+index -i \
+../data/02-DGE-analysis/cgigas_roslin_rna.index \
+../data/02-DGE-analysis/rna.fna
+```
+
+## Downloading sequence reads
+
+Sequence reads are on a public server at https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/nopp/
+
+This code uses recursive feature of wget (see this weeks’ reading) to get all 24 files. Additionally, as with curl above we are ignoring the fact there is not security certificate with --no-check-certificate
+
+Again, note I'll be accessing the reads from the `02-DGE-analysis` folder.
+
+```{r, engine='bash', eval=FALSE}
+cd ../data/02-DGE-analysis
+
+wget --recursive --no-parent --no-directories \
+--no-check-certificate \
+--accept '*.fastq.gz' \
+https://gannet.fish.washington.edu/seashell/bu-github/nb-2023/Cgigas/data/nopp/
+```
+
+The next chunk first creates a subdirectory
+
+Then performs the following steps:
+
+Uses the `find` utility to search for all files in the ../data/ directory that match the pattern *fastq.gz.
+
+Uses the basename command to extract the base filename of each file (i.e., the filename without the directory path), and removes the suffix _L001_R1_001.fastq.gz.
+
+Runs the kallisto quant command on each input file, with the following options:
+
+-i ../data/cgigas_roslin_rna.index: Use the kallisto index file located at ../data/cgigas_roslin_rna.index.
+
+-o ../output/02-DGE-analysis/{}: Write the output files to a directory called ../output/02-DGE-analysis/ with a subdirectory named after the base filename of the input file (the {} is a placeholder for the base filename).
+
+-t 40: Use 40 threads for the computation.
+
+--single -l 100 -s 10: Specify that the input file contains single-end reads (–single), with an average read length of 100 (-l 100) and a standard deviation of 10 (-s 10).
+The input file to process is specified using the {} placeholder, which is replaced by the base filename from the previous step.
+
+```{r, engine='bash', eval=FALSE}
+
+find ../data/02-DGE-analysis/*fastq.gz \
+| xargs basename -s _L001_R1_001.fastq.gz | xargs -I{} /home/shared/kallisto/kallisto \
+quant -i ../data/02-DGE-analysis/cgigas_roslin_rna.index \
+-o ../output/02-DGE-analysis/{} \
+-t 40 \
+--single -l 100 -s 10 ../data/02-DGE-analysis/{}_L001_R1_001.fastq.gz
+```
+
+This command runs the abundance_estimates_to_matrix.pl script from the Trinity RNA-seq assembly software package to create a gene expression matrix from kallisto output files.
+
+The specific options and arguments used in the command are as follows:
+
+perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl: Run the abundance_estimates_to_matrix.pl script from Trinity.
+
+--est_method kallisto: Specify that the abundance estimates were generated using kallisto.
+
+--gene_trans_map none: Do not use a gene-to-transcript mapping file.
+
+--out_prefix ../output/02-DGE-analysis: Use ../output/02-DGE-analysis as the output directory and prefix for the gene expression matrix file.
+
+--name_sample_by_basedir: Use the sample directory name (i.e., the final directory in the input file paths) as the sample name in the output matrix.
+
+And then there are the kallisto abundance files to use as input for creating the gene expression matrix.
+
+```{r, engine='bash', eval=FALSE}
+perl /home/shared/trinityrnaseq-v2.12.0/util/abundance_estimates_to_matrix.pl \
+--est_method kallisto \
+    --gene_trans_map none \
+    --out_prefix ../output/02-DGE-analysis \
+    --name_sample_by_basedir \
+    ../output/02-DGE-analysis/D54_S145/abundance.tsv \
+    ../output/02-DGE-analysis/D56_S136/abundance.tsv \
+    ../output/02-DGE-analysis/D58_S144/abundance.tsv \
+    ../output/02-DGE-analysis/M45_S140/abundance.tsv \
+    ../output/02-DGE-analysis/M48_S137/abundance.tsv \
+    ../output/02-DGE-analysis/M89_S138/abundance.tsv \
+    ../output/02-DGE-analysis/D55_S146/abundance.tsv \
+    ../output/02-DGE-analysis/D57_S143/abundance.tsv \
+    ../output/02-DGE-analysis/D59_S142/abundance.tsv \
+    ../output/02-DGE-analysis/M46_S141/abundance.tsv \
+    ../output/02-DGE-analysis/M49_S139/abundance.tsv \
+    ../output/02-DGE-analysis/M90_S147/abundance.tsv \
+    ../output/02-DGE-analysis/N48_S194/abundance.tsv \
+    ../output/02-DGE-analysis/N50_S187/abundance.tsv \
+    ../output/02-DGE-analysis/N52_S184/abundance.tsv \
+    ../output/02-DGE-analysis/N54_S193/abundance.tsv \
+    ../output/02-DGE-analysis/N56_S192/abundance.tsv \
+    ../output/02-DGE-analysis/N58_S195/abundance.tsv \
+    ../output/02-DGE-analysis/N49_S185/abundance.tsv \
+    ../output/02-DGE-analysis/N51_S186/abundance.tsv \
+    ../output/02-DGE-analysis/N53_S188/abundance.tsv \
+    ../output/02-DGE-analysis/N55_S190/abundance.tsv \
+    ../output/02-DGE-analysis/N57_S191/abundance.tsv \
+    ../output/02-DGE-analysis/N59_S189/abundance.tsv
+    
+mv ../output/02-DGE-analysis.isoform* ../output/02-DGE-analysis/
+```
+
+## Running DESeq2
+
+This code performs differential expression analysis to identify differentially expressed genes (DEGs) between a control condition and a desiccated condition.
+
+First, it reads in a count matrix of isoform counts generated by Kallisto, with row names set to the gene/transcript IDs and the first column removed. It then rounds the counts to whole numbers.
+
+Next, it creates a data.frame containing information about the experimental conditions and sets row names to match the column names in the count matrix. It uses this information to create a DESeqDataSet object, which is then passed to the DESeq() function to fit a negative binomial model and estimate dispersions. The results() function is used to extract the results table, which is ordered by gene/transcript ID.
+
+The code then prints the top few rows of the results table and calculates the number of DEGs with an adjusted p-value less than or equal to 0.05. It plots the log2 fold changes versus the mean normalized counts for all genes, highlighting significant DEGs in red and adding horizontal lines at 2-fold upregulation and downregulation. Finally, it writes the list of significant DEGs to a file called “DEGlist.tab”.
+
+Load and format counts data
+
+```{r}
+# Read in counts matrix
+countmatrix <- read.delim("../output/02-DGE-analysis/02-DGE-analysis.isoform.counts.matrix", header = TRUE, sep = '\t')
+
+# DESeq requires transcripts in rows, samples in columns
+# Transcript names and sample names must be stored as row names and column names, respectively
+# Store transcript names as rownames instead of entries in the column "X"
+rownames(countmatrix) <- countmatrix$X
+countmatrix <- countmatrix[,-1]
+
+# Round integers up to whole numbers for further analysis:
+countmatrix <- round(countmatrix, 0)
+str(countmatrix)
+
+# Check formatting
+head(countmatrix)
+```
+
+Get DEGs based on Desication
+```{r, cache=TRUE}
+
+# Create data frame of sample metadata
+deseq2.colData <- data.frame(
+  condition=factor(c(rep("control", 12), rep("desicated", 12))),
+  type=factor(rep("single-read", 24))
+)
+rownames(deseq2.colData) <- colnames(data)
+
+# Create DESeq2 object
+deseq2.dds <- DESeqDataSetFromMatrix(countData = countmatrix,
+                                     colData = deseq2.colData, 
+                                     design = ~ condition)
+```
+
+```{r, cache=TRUE}
+deseq2.dds <- DESeq(deseq2.dds)
+deseq2.res <- results(deseq2.dds)
+deseq2.res <- deseq2.res[order(rownames(deseq2.res)), ]
+# Save results as a data frame
+deseq2.res.df <- as.data.frame(deseq2.res)
+# save significant results
+res.sig <- deseq2.res.df %>% filter(padj < 0.05)
+```
+
+```{r}
+head(deseq2.res)
+```
+
+```{r}
+# Results summary
+summary(deseq2.res)
+
+# Count number of hits with adjusted p-value less then 0.05
+nrow(res.sig)
+head(res.sig)
+```
+
+## Visualize results
+
+### Variance stabilizing transformations (VST)
+- Here we transform counts using a variance stabilizing transformation (VST), since we have many samples. 
+```{r VST}
+vsd <- varianceStabilizingTransformation(deseq2.dds, blind=FALSE)
+```
+
+### Sample distances
+
+```{r plot-sample-distances}
+sampleDists <- dist(t(assay(vsd)))
+
+sampleDistMatrix <- as.matrix( sampleDists )
+
+condition_annotation = colData(deseq2.dds) %>% as.data.frame() %>% select(condition)
+
+pheatmap(sampleDistMatrix,
+         clustering_distance_rows = sampleDists,
+         clustering_distance_cols = sampleDists,
+         annotation_col = condition_annotation)
+```
+
+One sample (N56_S192) is popping out as strongly divergent from the rest of the samples. This suggests it's an outlier, and should perhaps be excluded from analysis
+
+### PCA
+
+Visualize sample clustering via PCA (after transformation)
+
+```{r pca-all-timepoints}
+# PCA with points color coded by time point 
+plotPCA(vsd, intgroup = c("condition"))
+
+```
+
+There's clear visual clustering by treatment group!
+
+### Heatmap
+
+```{r heatmap-all-timepoints-top20}
+top_200_counts_all <- order(rowMeans(counts(deseq2.dds,normalized=TRUE)),
+                decreasing=TRUE)[1:200]
+
+pheatmap(assay(vsd)[top_200_counts_all,], 
+         cluster_rows=FALSE, 
+         show_rownames=FALSE,
+         cluster_cols=TRUE, 
+         annotation_col = condition_annotation)
+
+```
+
+### Volcano plot
+
+```{r}
+# The main plot
+plot(deseq2.res.df$baseMean, deseq2.res.df$log2FoldChange, pch=20, cex=0.45, ylim=c(-3, 3), log="x", col="darkgray",
+     main="DEG Dessication  (pval <= 0.05)",
+     xlab="mean of normalized counts",
+     ylab="Log2 Fold Change")
+
+# Getting the significant points and plotting them again so they're a different color
+points(res.sig$baseMean, res.sig$log2FoldChange, pch=20, cex=0.45, col="red")
+# 2 FC lines
+abline(h=c(-1,1), col="blue")
+```
+
+### Functionally annotate DEGs
+
+```{r}
+res.sig$transcript <- rownames(res.sig)
+sig_annot <- left_join(res.sig, annotated, by=c("transcript" = "V1")) %>% distinct()
+sig_annot <- sig_annot %>% select(transcript, log2FoldChange, V3, Gene.Ontology..biological.process., Protein.names, Organism, Gene.Ontology.IDs)
+head(sig_annot)
+```
+
+
+```{r, eval=FALSE}
+# Assuming your data is already in a data frame called `df`
+# Split biological processes
+sig_annot <- sig_annot %>%
+  mutate(Gene.Ontology..biological.process. = as.character(Gene.Ontology..biological.process.))
+
+
+bio_counts <- sig_annot %>%
+  filter(!is.na(Gene.Ontology..biological.process.)) %>%
+  separate_rows(Gene.Ontology..biological.process., sep = ";") %>%
+  mutate(Gene.Ontology..biological.process. = str_trim(Gene.Ontology..biological.process.)) %>%
+  group_by(Gene.Ontology..biological.process.) %>%
+  summarise(n = n(), .groups = "drop") %>%
+  arrange(desc(n)) 
+
+bio_counts_20 <- bio_counts %>%
+  slice_tail(n = nrow(bio_counts)-1) %>%
+  slice_head(n = 20)
+
+# Plot histogram
+ggplot(bio_counts_20, aes(x = reorder(Gene.Ontology..biological.process., n), y = n, fill = Gene.Ontology..biological.process.)) +
+  geom_col(show.legend = TRUE) +
+  coord_flip() +
+  labs(title = "Frequency of Biological Processes",
+       x = "Biological Process",
+       y = "Count") +
+  theme_minimal() + 
+  theme(legend.position = "none")
+
+
+```
+
+
+```{r}
+write.table(sig_annot, "../output/02-DGE-analysis/DEGlist.tab", row.names = T)
+```
+
+
