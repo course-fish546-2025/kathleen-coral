@@ -1,0 +1,38 @@
+---
+title: "04-week4"
+author: "Kathleen Durkin"
+date: "2025-04-22"
+format: html
+editor: visual
+---
+
+## What is `tmux` and how does this relate to our current way of working on raven?
+
+`tmux` stands for "terminal multiplexer." As the name implies, a teminal multiplexer allows you to, from a single session, run multiple persistent windows with independent processes. This allows you to run and interact with multiple tasks simultaneously.
+
+We can do something similar in Raven! One can open multiple terminals in the Raven intrerface and run independent, simultaneous command-line processes. Note that this only works from the terminal windws. When running R code from the document window or console, you can only run a single process at a time.
+
+## What is `ssh` and what would the code be you would type if you were going to `ssh` into raven?
+
+`ssh` stands for "secure shell," and allows you to remotely open a secure network connection to another machine. This functionality is *suuuupppperrr* useful when you're running computationally intensive processes, because you can run them on more powerful servers/computing clusters instead of your local machine.
+
+To `ssh` into Raven I would open a terminal (since I'm working on a Windows machine, I'd need to use a command-line interface, like `Cygwin`). I'd then navigate to my preferred working directory and type in something like:
+
+```{r, engine='bash', eval=FALSE}
+ssh shedurkin@raven.uw.edu
+```
+
+I'd then enter my Raven password when prompted.
+
+Note that the command provided above is likely off, since I couldn't find the host name for Raven on the lab website. The basic format is correct though: `ssh username@host.name`
+
+## What has been the most challenging part of your research project? Are you happy with your organization skills? If not what could be improved?
+
+The biggest challenge has just been familiarizing myself with different data formats (e.g. the Bismark coverage files) and appropriate workflows. I've been looking through exisitng bioinformatic tutorials for performing differential methylation analysis using WGBS data to aid this process (e.g., the [NBIS epigenomics workshop](https://nbis-workshop-epigenomics.readthedocs.io/en/latest/content/tutorials/methylationSeq/Seq_Tutorial.html#introduction))
+
+I'm happy with my code/data organizational skills though, since I've already been working in other large repos with few organization issues. I've provided an overview of my project repo's structure in the [README](../project/README.md).
+
+## For last weeks assignment what did you appreciate the most about knitting documents?
+
+I love being able to easily include generated plots in knitted documents, since I find figures to be the most interpretable, digestible presentation of data/results.
+
