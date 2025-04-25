@@ -13,3 +13,9 @@ assignments/data/02-DGE-analysis/*
 
 assignments/output/01-blast/blastdb/*
 assignments/output/03-explain-and-knit/blastdb/*
+
+
+
+project/data/bismark-methyl-extraction/*.bismark.cov.gz
+
+project/code/*_cache

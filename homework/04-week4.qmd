@@ -26,6 +26,12 @@ I'd then enter my Raven password when prompted.
 
 Note that the command provided above is likely off, since I couldn't find the host name for Raven on the lab website. The basic format is correct though: `ssh username@host.name`
 
+Update: asked in class, Raven host name is `raven.fish.washington.edu`, so command to ssh into the server would be:
+
+```{r, engine='bash', eval=FALSE}
+ssh shedurkin@raven.fish.washintgon.edu
+```
+
 ## What has been the most challenging part of your research project? Are you happy with your organization skills? If not what could be improved?
 
 The biggest challenge has just been familiarizing myself with different data formats (e.g. the Bismark coverage files) and appropriate workflows. I've been looking through exisitng bioinformatic tutorials for performing differential methylation analysis using WGBS data to aid this process (e.g., the [NBIS epigenomics workshop](https://nbis-workshop-epigenomics.readthedocs.io/en/latest/content/tutorials/methylationSeq/Seq_Tutorial.html#introduction))
@@ -35,4 +41,3 @@ I'm happy with my code/data organizational skills though, since I've already bee
 ## For last weeks assignment what did you appreciate the most about knitting documents?
 
 I love being able to easily include generated plots in knitted documents, since I find figures to be the most interpretable, digestible presentation of data/results.
-
