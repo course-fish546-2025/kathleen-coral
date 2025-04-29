@@ -1,0 +1,25 @@
+---
+title: "04-week4"
+author: "Kathleen Durkin"
+date: "2025-04-29"
+format: html
+editor: visual
+---
+
+# Week 06 Questions
+
+## What are SAM/BAM files? What is the difference between to the two?
+
+SAM and BAM are file formats for storing aligned sequencing reads (e.g. RNA-sequencing reads aligned to a reference genome). Both are more space-efficient than a traditional sequence file formats, but BAM files are a **B**inary representation, and are thus even more spac-efficient than their human-readable couterpart of SAM files.
+
+## `samtools` is a popular program for working with alignment data. What are three common tasks that this software is used for?
+
+`samtools` is commonly used for filtering and converting between SAM and BAM file formats (`samtools view`); for sorting alignments by genomic location (`samtools sort`); and for merging multiple BAM files into a single file (`samtools merge`).
+
+## Why might you want to visualize alignment data and what are two programs that can be used for this?
+
+I am often working with transcriptomic data. I may want to visualize alignment data to determine, for example, how closely miRNA genes sit to their target genes on the genome. For this purpose I may want to use a genome browser, such as IGV, to view my miRNA and target genes mapped to the genome. 
+
+## Describe what a VCF file is?
+
+A VCF file, or Variant Call Format file, contains information on relevant genomic variants (e.g. SNPs). Rows represent variants, and columns contain myriad metadata for each variant, including genomic coordinates, type, and quality.
