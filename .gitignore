@@ -4,18 +4,17 @@
 .Ruserdata
 
 
-assignments/data/uniprot_sprot_r2025_04_03.fasta
-assignments/data/uniprot_sprot_r2025_04_03.fasta.gz
-assignments/data/uniprot_table_r2025_04_03.tab
-assignments/data/uniprot/Ab_4denovo_CLC6_a.fa
-assignments/data/02-DGE-analysis/*
-
+assignments/data/*
 
 assignments/output/01-blast/blastdb/*
 assignments/output/03-explain-and-knit/blastdb/*
-
+assignments/output/05-alignment-data/*.ht2
+assignments/output/05-alignment-data/*.sam
+assignments/output/05-alignment-data/*.bam
 
 
 project/data/bismark-methyl-extraction/*.bismark.cov.gz
+project/data/trimmed-WGBS-reads/*
 
 project/code/*_cache
+
