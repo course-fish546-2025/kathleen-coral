@@ -13,8 +13,14 @@ assignments/output/05-alignment-data/*.sam
 assignments/output/05-alignment-data/*.bam
 
 
+*.bam
+
 project/data/bismark-methyl-extraction/*.bismark.cov.gz
 project/data/trimmed-WGBS-reads/*
+project/data/Cvirginica_v300/*
+project/data/Cvirginica_v300.fa
+
+project/output/02.01-bismark-bowtie2-alignment-SLURM-array/*.bam
 
 project/code/*_cache
 
