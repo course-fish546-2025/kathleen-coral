@@ -1,0 +1,55 @@
+---
+title: "06-week6"
+author: "Kathleen Durkin"
+date: "2025-05-06"
+format: html
+editor: visual
+---
+
+# Week 06 Questions
+
+## What is Quarto?
+
+Quarto is a document formatting and publishing system that allows you to, from a standard .Rmd style of text input, create many different types of output (webpages, presentations, etc.)
+
+## How do you make columns using Revealjs in Quarto Presentations?
+
+You use a div ("division") container. The full columns container is bounded by sets of semicolons:
+
+```
+
+:::: {.columns}
+
+::::
+
+```
+
+Within the bounds you add div headers for each column with width information, and below each header you can include the column content:
+
+```
+
+:::: {.columns}
+
+::: {.column width="33%"}
+Left column
+:::
+
+::: {.column width="34%"}
+Middle column
+:::
+
+::: {.column width="33%"}
+Right column
+:::
+
+::::
+
+```
+
+## How would you change the appearance of slides using Revealjs in Quarto Presentations?
+
+You can use one of the 11 built-in themes, or you can create your own slide theme using a Sass file to define fonts, colors, text sizes, etc. Your theme of choice should be specified in the document YAML header.
+
+## What has been the biggest constraint working on your own research project in the past week?
+
+The biggest constraint has been the amount of time required to run computationally intensive alignments. For example, using an array to run bismark alignment on all of my WGBS samples, it took > 24 hours to complete a run. Also, when working with an array it's tough for me to parse all the outputs, since each sub-job on the array has its ouwn .err, .out, etc. files and they're named by job ID, not by sample.

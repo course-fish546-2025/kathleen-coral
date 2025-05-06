@@ -7,9 +7,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kathleen Durkin">
-<meta name="dcterms.date" content="2025-04-29">
+<meta name="dcterms.date" content="2025-05-06">
 
-<title>05-week5</title>
+<title>06-week6</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -25,16 +25,16 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="05-week5_files/libs/clipboard/clipboard.min.js"></script>
-<script src="05-week5_files/libs/quarto-html/quarto.js"></script>
-<script src="05-week5_files/libs/quarto-html/popper.min.js"></script>
-<script src="05-week5_files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="05-week5_files/libs/quarto-html/anchor.min.js"></script>
-<link href="05-week5_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="05-week5_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="05-week5_files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="05-week5_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="05-week5_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script src="06-week6_files/libs/clipboard/clipboard.min.js"></script>
+<script src="06-week6_files/libs/quarto-html/quarto.js"></script>
+<script src="06-week6_files/libs/quarto-html/popper.min.js"></script>
+<script src="06-week6_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="06-week6_files/libs/quarto-html/anchor.min.js"></script>
+<link href="06-week6_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="06-week6_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="06-week6_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="06-week6_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="06-week6_files/libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -47,7 +47,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">05-week5</h1>
+<h1 class="title">06-week6</h1>
 </div>
 
 
@@ -64,7 +64,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">April 29, 2025</p>
+      <p class="date">May 6, 2025</p>
     </div>
   </div>
   
@@ -76,23 +76,46 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="week-05-questions" class="level1">
-<h1>Week 05 Questions</h1>
-<section id="what-are-sambam-files-what-is-the-difference-between-to-the-two" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-sambam-files-what-is-the-difference-between-to-the-two">What are SAM/BAM files? What is the difference between to the two?</h2>
-<p>SAM and BAM are file formats for storing aligned sequencing reads (e.g.&nbsp;RNA-sequencing reads aligned to a reference genome). Both are more space-efficient than a traditional sequence file formats, but BAM files are a <strong>B</strong>inary representation, and are thus even more spac-efficient than their human-readable couterpart of SAM files.</p>
+<section id="week-06-questions" class="level1">
+<h1>Week 06 Questions</h1>
+<section id="what-is-quarto" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-quarto">What is Quarto?</h2>
+<p>Quarto is a document formatting and publishing system that allows you to, from a standard .Rmd style of text input, create many different types of output (webpages, presentations, etc.)</p>
 </section>
-<section id="samtools-is-a-popular-program-for-working-with-alignment-data.-what-are-three-common-tasks-that-this-software-is-used-for" class="level2">
-<h2 class="anchored" data-anchor-id="samtools-is-a-popular-program-for-working-with-alignment-data.-what-are-three-common-tasks-that-this-software-is-used-for"><code>samtools</code> is a popular program for working with alignment data. What are three common tasks that this software is used for?</h2>
-<p><code>samtools</code> is commonly used for filtering and converting between SAM and BAM file formats (<code>samtools view</code>); for sorting alignments by genomic location (<code>samtools sort</code>); and for merging multiple BAM files into a single file (<code>samtools merge</code>).</p>
+<section id="how-do-you-make-columns-using-revealjs-in-quarto-presentations" class="level2">
+<h2 class="anchored" data-anchor-id="how-do-you-make-columns-using-revealjs-in-quarto-presentations">How do you make columns using Revealjs in Quarto Presentations?</h2>
+<p>You use a div (“division”) container. The full columns container is bounded by sets of semicolons:</p>
+<pre><code>
+:::: {.columns}
+
+::::
+</code></pre>
+<p>Within the bounds you add div headers for each column with width information, and below each header you can include the column content:</p>
+<pre><code>
+:::: {.columns}
+
+::: {.column width="33%"}
+Left column
+:::
+
+::: {.column width="34%"}
+Middle column
+:::
+
+::: {.column width="33%"}
+Right column
+:::
+
+::::
+</code></pre>
 </section>
-<section id="why-might-you-want-to-visualize-alignment-data-and-what-are-two-programs-that-can-be-used-for-this" class="level2">
-<h2 class="anchored" data-anchor-id="why-might-you-want-to-visualize-alignment-data-and-what-are-two-programs-that-can-be-used-for-this">Why might you want to visualize alignment data and what are two programs that can be used for this?</h2>
-<p>I am often working with transcriptomic data. I may want to visualize alignment data to determine, for example, how closely miRNA genes sit to their target genes on the genome. For this purpose I may want to use a genome browser, such as IGV, to view my miRNA and target genes mapped to the genome.</p>
+<section id="how-would-you-change-the-appearance-of-slides-using-revealjs-in-quarto-presentations" class="level2">
+<h2 class="anchored" data-anchor-id="how-would-you-change-the-appearance-of-slides-using-revealjs-in-quarto-presentations">How would you change the appearance of slides using Revealjs in Quarto Presentations?</h2>
+<p>You can use one of the 11 built-in themes, or you can create your own slide theme using a Sass file to define fonts, colors, text sizes, etc. Your theme of choice should be specified in the document YAML header.</p>
 </section>
-<section id="describe-what-a-vcf-file-is" class="level2">
-<h2 class="anchored" data-anchor-id="describe-what-a-vcf-file-is">Describe what a VCF file is?</h2>
-<p>A VCF file, or Variant Call Format file, contains information on relevant genomic variants (e.g.&nbsp;SNPs). Rows represent variants, and columns contain myriad metadata for each variant, including genomic coordinates, type, and quality.</p>
+<section id="what-has-been-the-biggest-constraint-working-on-your-own-research-project-in-the-past-week" class="level2">
+<h2 class="anchored" data-anchor-id="what-has-been-the-biggest-constraint-working-on-your-own-research-project-in-the-past-week">What has been the biggest constraint working on your own research project in the past week?</h2>
+<p>The biggest constraint has been the amount of time required to run computationally intensive alignments. For example, using an array to run bismark alignment on all of my WGBS samples, it took &gt; 24 hours to complete a run. Also, when working with an array it’s tough for me to parse all the outputs, since each sub-job on the array has its ouwn .err, .out, etc. files and they’re named by job ID, not by sample.</p>
 </section>
 </section>
 
