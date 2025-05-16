@@ -1,0 +1,6 @@
+##gff-version 3
+##sequence-region EMBOSS_001 1 813
+#!Date 2025-05-16
+#!Type DNA
+#!Source-version EMBOSS 6.6.0.0
+EMBOSS_001	fuzznuc	nucleotide_motif	65	66	2	+	.	ID=EMBOSS_001.1;note=*pat pattern:CG
