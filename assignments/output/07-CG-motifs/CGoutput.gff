@@ -1,6 +1,33 @@
 ##gff-version 3
-##sequence-region EMBOSS_001 1 813
+##sequence-region EMBOSS_001 1 8675
 #!Date 2025-05-16
 #!Type DNA
 #!Source-version EMBOSS 6.6.0.0
-EMBOSS_001	fuzznuc	nucleotide_motif	65	66	2	+	.	ID=EMBOSS_001.1;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	154	155	2	+	.	ID=EMBOSS_001.1;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	1355	1356	2	+	.	ID=EMBOSS_001.2;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	2582	2583	2	+	.	ID=EMBOSS_001.3;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3230	3231	2	+	.	ID=EMBOSS_001.4;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3506	3507	2	+	.	ID=EMBOSS_001.5;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3529	3530	2	+	.	ID=EMBOSS_001.6;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3675	3676	2	+	.	ID=EMBOSS_001.7;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3964	3965	2	+	.	ID=EMBOSS_001.8;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	3972	3973	2	+	.	ID=EMBOSS_001.9;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	4461	4462	2	+	.	ID=EMBOSS_001.10;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	4517	4518	2	+	.	ID=EMBOSS_001.11;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	4544	4545	2	+	.	ID=EMBOSS_001.12;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	4639	4640	2	+	.	ID=EMBOSS_001.13;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	4660	4661	2	+	.	ID=EMBOSS_001.14;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	5601	5602	2	+	.	ID=EMBOSS_001.15;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6211	6212	2	+	.	ID=EMBOSS_001.16;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6254	6255	2	+	.	ID=EMBOSS_001.17;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6266	6267	2	+	.	ID=EMBOSS_001.18;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6677	6678	2	+	.	ID=EMBOSS_001.19;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6786	6787	2	+	.	ID=EMBOSS_001.20;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	6840	6841	2	+	.	ID=EMBOSS_001.21;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	7629	7630	2	+	.	ID=EMBOSS_001.22;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	7641	7642	2	+	.	ID=EMBOSS_001.23;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	7871	7872	2	+	.	ID=EMBOSS_001.24;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	7916	7917	2	+	.	ID=EMBOSS_001.25;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	7972	7973	2	+	.	ID=EMBOSS_001.26;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	8103	8104	2	+	.	ID=EMBOSS_001.27;note=*pat pattern:CG
+EMBOSS_001	fuzznuc	nucleotide_motif	8115	8116	2	+	.	ID=EMBOSS_001.28;note=*pat pattern:CG
