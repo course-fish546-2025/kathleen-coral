@@ -12,6 +12,7 @@ assignments/output/03-explain-and-knit/blastdb/*
 assignments/output/05-alignment-data/*.ht2
 assignments/output/05-alignment-data/*.sam
 assignments/output/05-alignment-data/*.bam
+assignments/output/08-BEDtools/*
 
 
 *.bam

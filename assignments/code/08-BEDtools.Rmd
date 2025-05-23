@@ -1,0 +1,94 @@
+---
+title: "08-BEDtools"
+author: "Kathleen Durkin"
+date: "2025-05-23"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+See assignment details [here](https://sr320.github.io/course-fish546-2025/assignments/08-bedtools.html)
+
+
+
+Re-download Week 6 data if necessary
+```{r, engine='bash', eval=FALSE}
+cd ../data 
+curl -O https://gannet.fish.washington.edu/seashell/bu-mox/scrubbed/120321-cvBS/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam 
+curl -O https://gannet.fish.washington.edu/seashell/bu-mox/scrubbed/120321-cvBS/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam.bai
+```
+
+We'll also need a bed file with gene information.
+```{r, engine='bash', eval=FALSE}
+cd ../data 
+curl -O https://eagle.fish.washington.edu/Cvirg_tracks/C_virginica-3.0_Gnomon_genes.bed
+```
+
+# Convert bam to bed
+```{r, engine='bash', eval=FALSE}
+/home/shared/bedtools2/bin/bedtools bamtobed \
+-i ../data/19F_R1_val_1_bismark_bt2_pe.deduplicated.sorted.bam \
+> ../output/08-BEDtools/08-19F.bed
+```
+
+Warning
+This is big file, so it should *not* be staged or pushed to Github. Instead, add it to your .gitignore
+
+# Get coverage of sequence reads on gene regions
+
+```{r, engine='bash', eval=FALSE}
+/home/shared/bedtools2/bin/bedtools coverage \
+-a ../data/C_virginica-3.0_Gnomon_genes.bed \
+-b ../output/08-BEDtools/08-19F.bed \
+> ../output/08-BEDtools/08-gene-19F-coverage.out
+```
+
+```{r, engine='bash'}
+head -2 ../output/08-BEDtools/08-gene-19F-coverage.out
+```
+
+# Intersect
+
+Lets grab a bed file of Transposable Elements and lncRNAs
+```{r, engine='bash', eval=FALSE}
+cd ../data
+curl -O http://owl.fish.washington.edu/halfshell/genomic-databank/cgigas_uk_roslin_v1_gene.gff 
+curl -O http://owl.fish.washington.edu/halfshell/genomic-databank/cgigas_uk_roslin_v1_rm.te.bed
+curl -O http://owl.fish.washington.edu/halfshell/genomic-databank/cgigas_uk_roslin_v1_lncRNA.gff
+```
+
+```{r, engine='bash'}
+/home/shared/bedtools2/bin/bedtools intersect \
+-a ../data/cgigas_uk_roslin_v1_gene.gff \
+-b ../data/cgigas_uk_roslin_v1_rm.te.bed \
+> ../output/08-BEDtools/08-gene-TE-intersect.out
+```
+
+```{r, engine='bash'}
+head -2 ../output/08-BEDtools/08-gene-TE-intersect.out
+```
+
+# Closest
+
+```{r, engine='bash'}
+/home/shared/bedtools2/bin/bedtools closest \
+-a ../data/cgigas_uk_roslin_v1_lncRNA.gff \
+-b ../data/cgigas_uk_roslin_v1_gene.gff \
+> ../output/08-BEDtools/08-lnc-gene-closet.out
+```
+
+```{r, engine='bash'}
+head -2 ../output/08-BEDtools/08-lnc-gene-closet.out
+```
+
