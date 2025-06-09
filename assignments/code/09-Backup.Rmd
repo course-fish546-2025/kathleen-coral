@@ -1,0 +1,61 @@
+---
+title: "09-Backup"
+author: "Kathleen Durkin"
+date: "2025-06-09"
+always_allow_html: true
+output: 
+  github_document:
+    toc: true
+    toc_depth: 3
+    number_sections: true
+    html_preview: true 
+  bookdown::html_document2:
+    theme: cosmo
+    toc: true
+    toc_float: true
+    number_sections: true
+    code_folding: show
+    code_download: true
+---
+
+Full assignment details [here](https://sr320.github.io/course-fish546-2025/assignments/09-backup.html).
+
+Zenodo Instructions (provided [here](https://sr320.github.io/course-fish546-2023/lectures/09-project.html#archiving-a-repo-with-zenodo)):
+
+## Archiving a repo with Zenodo
+
+Archiving your GitHub repository with Zenodo allows you to have a digital object identifier (DOI) for your repo, which is useful for citing your software in academic papers. Here’s a step-by-step guide:
+
+### 1. Create a Zenodo account. 
+
+You’ll need to visit Zenodo’s homepage (https://zenodo.org/) and sign up for an account if you don’t already have one.
+
+**Created an account under the username `shedurkin`, and linked it to my ORCID ID.**
+
+### 2. Link GitHub with Zenodo. 
+
+After you’ve set up your Zenodo account, you can navigate to the “GitHub” section in the dashboard and link your GitHub account to Zenodo.
+
+### 3. Authorize Zenodo on GitHub. 
+
+Zenodo will request access to your GitHub repositories. You can either allow Zenodo to access all your repositories or only select ones. After you’ve made your choice, click “Authorize Zenodo.”
+
+### 4. Select the repository. 
+
+Back in Zenodo, you should see a list of all your GitHub repositories. You can choose to archive any repository by toggling the switch to “on” next to the repository name. Zenodo will now create a “webhook” for this repository, which will notify Zenodo whenever there is a new release of the repository on GitHub.
+
+### 5. Create a new release on GitHub. 
+
+If you haven’t done so already, you should create a new release of your repository on GitHub. Go to your repository page, click “releases” then “create a new release”. Tag version with the version number (for example “v1.0”) and add some description about this release. Zenodo will be notified once the release is published.
+
+### 6. Check Zenodo for the deposit. 
+
+After creating a new release, go back to Zenodo. You should see the new release in the “Upload” section. Zenodo automatically fills in some of the metadata for you, such as the title and authors, but you can edit this if needed.
+
+### 7. Publish the archive on Zenodo. 
+
+Finally, you can publish the archive on Zenodo. Make sure all the information is correct, and then click the “Publish” button. Your repository is now archived, and you will have a DOI that you can use to cite your software.
+
+
+
+Remember that Zenodo will archive a new version of your repository every time you create a new release on GitHub, so it’s important to create meaningful and well-documented releases. Zenodo also allows you to link different versions of your software together, so that it’s clear how the software has changed over time.
