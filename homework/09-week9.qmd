@@ -1,0 +1,35 @@
+---
+title: "09-week9"
+author: "Kathleen Durkin"
+date: "2025-06-09"
+format: html
+editor: source
+---
+
+# Week 09 Questions
+
+## What is your goal with respect to your research project to get accomplished this week?
+
+Finish preliminary visualizations and potentially re-analyze differential methylation with a potentially outlying sample excluded (EF06-EM06-Larvae bedGraph profile is dramatically different from rest of larval methylation landscapes for the offspring of Exposed parents, looks instead like the profiles of larval offspring from Controls.)
+
+## What is the overall status of your research repo? Is it will organized with a clear Readme file? Are file names and directory clear? Would your classmates be able to understand what the code in your files is designed to do?
+
+I have a README.md file that clearly describes the project background, experimental design, and available sample data, and which provides an outline of the repo structure. Directories are clearly named, and code documents include numerical prefixes that are chronological and correspond to data and output directory prefixes.
+
+## Go to one of your classmates repo and/or compendium link. What are three things you think are neat? What are two things that are really not that clear to you?
+
+I looked at [Kathy's repo](https://github.com/course-fish546-2025/kathy-pico)
+
+Neat!
+
+- Work for homework question sets, weekly assignments, and the course project is organized in distinct directories (`homework`, `assignments`, and `project`).
+
+- README.md for the repo describes what type of work is contained in each of these three directories.
+
+- The git commit messages are clear and descriptive, which provides a useful record of what changes were made, and when.
+
+Still unclear
+
+- The `project` README.md file could be more descriptive. It contains a sentence describing the general research goal but there is no background on experimental design, sample/data type, or directory structure.
+
+- While project code is in a clearly marked directory, it isn't clear where the outputs are stored? They may be too large to store on Github, but those outputs would still ideally be stored in a publicly-facing server, with the link provided somewhere in the Github repo. 
