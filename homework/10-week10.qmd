@@ -1,0 +1,34 @@
+---
+title: "10-week10"
+author: "Kathleen Durkin"
+date: "2025-06-09"
+format: html
+editor: source
+---
+
+# Week 10 Questions
+
+## Looking back on the quarter what are two things you were not expecting to learn but did, glad you did, and how would you implement this knowledge beyond this class?
+
+1. I didn't expect to learn a new method for backing up data/code, since I've grown accustomed to using a private (but publically-facing) server (i.e. Gannet). Zenodo looks super cool though! I just recently set up an ORCID ID, and I really like that Zenodo incorporates both ORCID and Github! Iwant to get comfortable with the site so I can use it for future publications/projects
+
+2. I wasn't excpecting to learn how to use bash scripts in an array, since I've studiously been avoiding it. While I still haven't got the hang of it, I'm glad to have been forced to work with it, since they seem *super* useful for parallelizing computationally intensive tasks (e.g., alignment)
+
+## Rank the following from 1-5, with 1 being your best friend and 5 being your enemy (raven, rstudio, knitr, bash, github)
+
+1. rstudio -- the love of my life
+
+2. github -- the other love of my life (but I would genuinely rather deal with manual file management than have to code without an IDE)
+
+3. raven -- thank god I don't have to manually launch an RStudio instance every time I want to work on a server
+
+4. knitr -- meh
+
+5. bash -- super useful but still the bane of my existence
+
+## As part of your research project you must of learned something beyond methods. What is the most important biological finding from your work to to date? Assuming you follow this line of research what is your long term goal of what you expect to learn about biology, ecology, or the environment?
+
+I potentially identified environmentally-induced differential DNA methylation that was inherited in F1 in oysters, for perhaps the first time! The putative inheritance also appears to be paternally-driven, which matches established knowledge in vertebrates (e.g., in zebrafish the paternally-driven methylome is stably inherited).
+
+Long-term, this line of research will inform our (quite incomplete) understanding of the function and heritability of DNA methylation in marine invertebrates.
+
