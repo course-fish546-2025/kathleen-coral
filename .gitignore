@@ -21,6 +21,8 @@ project/data/bismark-methyl-extraction/*.bismark.cov.gz
 project/data/trimmed-WGBS-reads/*
 project/data/Cvirginica_v300/*
 project/data/Cvirginica_v300.fa
+project/data/larval_bedGraphs/*
+project/data/larval_parent_bedGraphs/*
 
 project/output/02.01-bismark-bowtie2-alignment-SLURM-array/*.bam
 
