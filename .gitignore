@@ -18,6 +18,7 @@ assignments/output/08-BEDtools/*
 *.bam
 
 project/data/bismark-methyl-extraction/*.bismark.cov.gz
+project/data/bismark-methyl-extraction-parent/*.bismark.cov.gz
 project/data/trimmed-WGBS-reads/*
 project/data/Cvirginica_v300/*
 project/data/Cvirginica_v300.fa
