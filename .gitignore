@@ -25,8 +25,11 @@ project/data/Cvirginica_v300.fa
 project/data/larval_bedGraphs/*
 project/data/larval_parent_bedGraphs/*
 
-project/output/02.01-bismark-bowtie2-alignment-SLURM-array/*.bam
+project/output/02.01-bismark-bowtie2-alignment-SLURM-array/*
+project/output/02.01-bismark-bowtie2-alignment-SLURM-array-FAILED/*
+project/output/05.1.sh/*
 project/output/10-diff-methyl-DSS/*
 
 project/code/*_cache
-
+project/code/05-bismark-align-full.job
+project/code/05.1.sh
