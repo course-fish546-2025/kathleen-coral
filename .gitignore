@@ -26,6 +26,7 @@ project/data/larval_bedGraphs/*
 project/data/larval_parent_bedGraphs/*
 
 project/output/02.01-bismark-bowtie2-alignment-SLURM-array/*.bam
+project/output/10-diff-methyl-DSS/*
 
 project/code/*_cache
 
